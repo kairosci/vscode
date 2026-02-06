@@ -93,24 +93,21 @@ export class GithubRemoteSourceProvider implements RemoteSourceProvider {
 	}
 
 	private async fetchUserRepos(octokit: Octokit): Promise<RemoteSource[]> {
-		const user = await octokit.users.getAuthenticated({});
-		const username = user.data.login;
-		const res = await octokit.repos.listForAuthenticatedUser({ username, sort: 'updated', per_page: 100 });
-		return res.data.map(asRemoteSource);
+		const repos = await octokit.paginate(octokit.repos.listForAuthenticatedUser, { sort: 'updated', per_page: 100 });
+		return repos.map(asRemoteSource);
 	}
 
 	private async fetchOrgRepos(octokit: Octokit): Promise<RemoteSource[]> {
 		try {
-			const orgsResponse = await octokit.orgs.listForAuthenticatedUser({ per_page: 100 });
-			const orgs = orgsResponse.data;
+			const orgs = await octokit.paginate(octokit.orgs.listForAuthenticatedUser, { per_page: 100 });
 
 			if (orgs.length === 0) {
 				return [];
 			}
 
 			const orgReposPromises = orgs.map(org =>
-				octokit.repos.listForOrg({ org: org.login, sort: 'updated', per_page: 100 })
-					.then(res => res.data.map(asRemoteSource))
+				octokit.paginate(octokit.repos.listForOrg, { org: org.login, sort: 'updated', per_page: 100 })
+					.then(repos => repos.map(asRemoteSource))
 					.catch(() => [] as RemoteSource[])
 			);
 
