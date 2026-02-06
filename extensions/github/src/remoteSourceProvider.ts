@@ -62,8 +62,9 @@ export class GithubRemoteSourceProvider implements RemoteSourceProvider {
 
 		for (const group of all) {
 			for (const remoteSource of group) {
-				if (!map.has(remoteSource.name)) {
-					map.set(remoteSource.name, remoteSource);
+				const key = typeof remoteSource.url === 'string' ? remoteSource.url : remoteSource.url[0];
+				if (!map.has(key)) {
+					map.set(key, remoteSource);
 				}
 			}
 		}
@@ -73,12 +74,18 @@ export class GithubRemoteSourceProvider implements RemoteSourceProvider {
 
 	private async getUserRemoteSources(octokit: Octokit, query?: string): Promise<RemoteSource[]> {
 		if (!this.userRepoCachePopulated) {
-			const [userRepos, orgRepos] = await Promise.all([
-				this.fetchUserRepos(octokit),
-				this.fetchOrgRepos(octokit),
-			]);
-			this.userReposCache = [...userRepos, ...orgRepos];
-			this.userRepoCachePopulated = true;
+			try {
+				const [userRepos, orgRepos] = await Promise.all([
+					this.fetchUserRepos(octokit),
+					this.fetchOrgRepos(octokit),
+				]);
+				this.userReposCache = [...userRepos, ...orgRepos];
+				this.userRepoCachePopulated = true;
+			} catch {
+				// Swallow errors so that remote source querying can continue,
+				// and allow a retry on the next invocation.
+				this.userReposCache = [];
+			}
 		}
 
 		if (!query) {
