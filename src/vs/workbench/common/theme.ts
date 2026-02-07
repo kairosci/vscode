@@ -482,19 +482,34 @@ export const ACTIVITY_BAR_TOP_HOVER_BACKGROUND = registerColor('activityBarTop.h
 
 export const ACTIVITY_BAR_TOP_HOVER_FOREGROUND = registerColor('activityBarTop.hoverForeground', ACTIVITY_BAR_TOP_FOREGROUND, localize('activityBarTopHoverForeground', "Activity bar item foreground color when hovering and the activity bar is on top / bottom. The activity allows to switch between views of the side bar."));
 
-export const ACTIVITY_BAR_BOTTOM_FOREGROUND = registerColor('activityBarBottom.foreground', ACTIVITY_BAR_TOP_FOREGROUND, localize('activityBarBottomForeground', "Active foreground color of the item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
+export const ACTIVITY_BAR_BOTTOM_FOREGROUND = registerColor('activityBarBottom.foreground', {
+	dark: '#E7E7E7',
+	light: '#424242',
+	hcDark: Color.white,
+	hcLight: editorForeground
+}, localize('activityBarBottomForeground', "Active foreground color of the item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
 
-export const ACTIVITY_BAR_BOTTOM_ACTIVE_BORDER = registerColor('activityBarBottom.activeBorder', ACTIVITY_BAR_TOP_ACTIVE_BORDER, localize('activityBarBottomActiveBorder', "Focus border color for the active item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
+export const ACTIVITY_BAR_BOTTOM_ACTIVE_BORDER = registerColor('activityBarBottom.activeBorder', {
+	dark: ACTIVITY_BAR_BOTTOM_FOREGROUND,
+	light: ACTIVITY_BAR_BOTTOM_FOREGROUND,
+	hcDark: contrastBorder,
+	hcLight: '#B5200D'
+}, localize('activityBarBottomActiveBorder', "Focus border color for the active item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
 
-export const ACTIVITY_BAR_BOTTOM_ACTIVE_BACKGROUND = registerColor('activityBarBottom.activeBackground', ACTIVITY_BAR_TOP_ACTIVE_BACKGROUND, localize('activityBarBottomActiveBackground', "Background color for the active item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
+export const ACTIVITY_BAR_BOTTOM_ACTIVE_BACKGROUND = registerColor('activityBarBottom.activeBackground', null, localize('activityBarBottomActiveBackground', "Background color for the active item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
 
-export const ACTIVITY_BAR_BOTTOM_INACTIVE_FOREGROUND = registerColor('activityBarBottom.inactiveForeground', ACTIVITY_BAR_TOP_INACTIVE_FOREGROUND, localize('activityBarBottomInactiveForeground', "Inactive foreground color of the item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
+export const ACTIVITY_BAR_BOTTOM_INACTIVE_FOREGROUND = registerColor('activityBarBottom.inactiveForeground', {
+	dark: transparent(ACTIVITY_BAR_BOTTOM_FOREGROUND, 0.6),
+	light: transparent(ACTIVITY_BAR_BOTTOM_FOREGROUND, 0.75),
+	hcDark: Color.white,
+	hcLight: editorForeground
+}, localize('activityBarBottomInactiveForeground', "Inactive foreground color of the item in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
 
-export const ACTIVITY_BAR_BOTTOM_DRAG_AND_DROP_BORDER = registerColor('activityBarBottom.dropBorder', ACTIVITY_BAR_TOP_DRAG_AND_DROP_BORDER, localize('activityBarBottomDragAndDropBorder', "Drag and drop feedback color for the items in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
+export const ACTIVITY_BAR_BOTTOM_DRAG_AND_DROP_BORDER = registerColor('activityBarBottom.dropBorder', ACTIVITY_BAR_BOTTOM_FOREGROUND, localize('activityBarBottomDragAndDropBorder', "Drag and drop feedback color for the items in the Activity bar when it is at the bottom. The activity allows to switch between views of the side bar."));
 
-export const ACTIVITY_BAR_BOTTOM_BACKGROUND = registerColor('activityBarBottom.background', ACTIVITY_BAR_TOP_BACKGROUND, localize('activityBarBottomBackground', "Background color of the activity bar when set to bottom."));
+export const ACTIVITY_BAR_BOTTOM_BACKGROUND = registerColor('activityBarBottom.background', null, localize('activityBarBottomBackground', "Background color of the activity bar when set to bottom."));
 
-export const ACTIVITY_BAR_BOTTOM_HOVER_BACKGROUND = registerColor('activityBarBottom.hoverBackground', ACTIVITY_BAR_TOP_HOVER_BACKGROUND, localize('activityBarBottomHoverBackground', "Activity bar item background color when hovering and the activity bar is at the bottom. The activity allows to switch between views of the side bar."));
+export const ACTIVITY_BAR_BOTTOM_HOVER_BACKGROUND = registerColor('activityBarBottom.hoverBackground', null, localize('activityBarBottomHoverBackground', "Activity bar item background color when hovering and the activity bar is at the bottom. The activity allows to switch between views of the side bar."));
 
 export const ACTIVITY_BAR_BOTTOM_HOVER_FOREGROUND = registerColor('activityBarBottom.hoverForeground', ACTIVITY_BAR_BOTTOM_FOREGROUND, localize('activityBarBottomHoverForeground', "Activity bar item foreground color when hovering and the activity bar is at the bottom. The activity allows to switch between views of the side bar."));
 
