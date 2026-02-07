@@ -11,9 +11,9 @@ import { IStorageService, StorageScope, StorageTarget } from '../../../../platfo
 import { IContextMenuService } from '../../../../platform/contextview/browser/contextView.js';
 import { IKeybindingService } from '../../../../platform/keybinding/common/keybinding.js';
 import { IInstantiationService } from '../../../../platform/instantiation/common/instantiation.js';
-import { IThemeService } from '../../../../platform/theme/common/themeService.js';
+import { IThemeService, registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
 import { contrastBorder } from '../../../../platform/theme/common/colorRegistry.js';
-import { SIDE_BAR_TITLE_FOREGROUND, SIDE_BAR_TITLE_BORDER, SIDE_BAR_BACKGROUND, SIDE_BAR_FOREGROUND, SIDE_BAR_BORDER, SIDE_BAR_DRAG_AND_DROP_BACKGROUND, ACTIVITY_BAR_BADGE_BACKGROUND, ACTIVITY_BAR_BADGE_FOREGROUND, ACTIVITY_BAR_TOP_FOREGROUND, ACTIVITY_BAR_TOP_ACTIVE_BORDER, ACTIVITY_BAR_TOP_INACTIVE_FOREGROUND, ACTIVITY_BAR_TOP_DRAG_AND_DROP_BORDER } from '../../../common/theme.js';
+import { SIDE_BAR_TITLE_FOREGROUND, SIDE_BAR_TITLE_BORDER, SIDE_BAR_BACKGROUND, SIDE_BAR_FOREGROUND, SIDE_BAR_BORDER, SIDE_BAR_DRAG_AND_DROP_BACKGROUND, ACTIVITY_BAR_BADGE_BACKGROUND, ACTIVITY_BAR_BADGE_FOREGROUND, ACTIVITY_BAR_TOP_FOREGROUND, ACTIVITY_BAR_TOP_ACTIVE_BORDER, ACTIVITY_BAR_TOP_HOVER_BACKGROUND, ACTIVITY_BAR_TOP_HOVER_FOREGROUND, ACTIVITY_BAR_TOP_INACTIVE_FOREGROUND, ACTIVITY_BAR_TOP_DRAG_AND_DROP_BORDER } from '../../../common/theme.js';
 import { INotificationService } from '../../../../platform/notification/common/notification.js';
 import { IContextKeyService } from '../../../../platform/contextkey/common/contextkey.js';
 import { AnchorAlignment } from '../../../../base/browser/ui/contextview/contextview.js';
@@ -335,3 +335,74 @@ export class SidebarPart extends AbstractPaneCompositePart {
 		};
 	}
 }
+
+registerThemingParticipant((theme, collector) => {
+	const activeForeground = theme.getColor(ACTIVITY_BAR_TOP_FOREGROUND);
+	if (activeForeground) {
+		collector.addRule(`
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked .action-label.codicon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked .action-label.codicon {
+				color: ${activeForeground} !important;
+				position: relative !important;
+				z-index: 1 !important;
+			}
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked .action-label.uri-icon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked .action-label.uri-icon {
+				background-color: ${activeForeground} !important;
+				position: relative !important;
+				z-index: 1 !important;
+			}
+		`);
+	}
+
+	const inactiveForeground = theme.getColor(ACTIVITY_BAR_TOP_INACTIVE_FOREGROUND);
+	if (inactiveForeground) {
+		collector.addRule(`
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:not(.checked) .action-label.codicon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:not(.checked) .action-label.codicon {
+				color: ${inactiveForeground} !important;
+				position: relative !important;
+				z-index: 1 !important;
+			}
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:not(.checked) .action-label.uri-icon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:not(.checked) .action-label.uri-icon {
+				background-color: ${inactiveForeground} !important;
+				position: relative !important;
+				z-index: 1 !important;
+			}
+		`);
+	}
+
+	const hoverBackground = theme.getColor(ACTIVITY_BAR_TOP_HOVER_BACKGROUND);
+	if (hoverBackground) {
+		collector.addRule(`
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .active-item-indicator,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .active-item-indicator {
+				background-color: ${hoverBackground} !important;
+				z-index: 0;
+			}
+		`);
+	}
+
+	const hoverForeground = theme.getColor(ACTIVITY_BAR_TOP_HOVER_FOREGROUND);
+	if (hoverForeground) {
+		collector.addRule(`
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .action-label.codicon,
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:hover .action-label.codicon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .action-label.codicon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:hover .action-label.codicon {
+				color: ${hoverForeground} !important;
+				position: relative !important;
+				z-index: 1 !important;
+			}
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .action-label.uri-icon,
+			.monaco-workbench .part.sidebar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:hover .action-label.uri-icon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:hover .action-label.uri-icon,
+			.monaco-workbench .part.sidebar > .header-or-footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item.checked:hover .action-label.uri-icon {
+				background-color: ${hoverForeground} !important;
+				position: relative !important;
+				z-index: 1 !important;
+			}
+		`);
+	}
+});
