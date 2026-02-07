@@ -376,6 +376,28 @@ registerThemingParticipant((theme, collector) => {
 		`);
 	}
 
+	// Active/Click state for Top position in Auxiliary Bar
+	const activeBackgroundTop = theme.getColor(ACTIVITY_BAR_TOP_ACTIVE_BACKGROUND);
+	if (activeBackgroundTop) {
+		collector.addRule(`
+			.monaco-workbench .part.auxiliarybar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:active .active-item-indicator,
+			.monaco-workbench .part.auxiliarybar > .header-or-footer.header > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:active .active-item-indicator {
+				background-color: ${activeBackgroundTop} !important;
+				z-index: 0;
+			}
+		`);
+	}
+
+	const activeBorderTop = theme.getColor(ACTIVITY_BAR_TOP_ACTIVE_BORDER);
+	if (activeBorderTop) {
+		collector.addRule(`
+			.monaco-workbench .part.auxiliarybar > .title > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:active .active-item-indicator:before,
+			.monaco-workbench .part.auxiliarybar > .header-or-footer.header > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:active .active-item-indicator:before {
+				border-bottom-color: ${activeBorderTop};
+			}
+		`);
+	}
+
 	// Bottom (Footer)
 	const activeForegroundBottom = theme.getColor(ACTIVITY_BAR_BOTTOM_FOREGROUND);
 	if (activeForegroundBottom) {
@@ -433,6 +455,26 @@ registerThemingParticipant((theme, collector) => {
 				background-color: ${hoverForegroundBottom} !important;
 				position: relative !important;
 				z-index: 1 !important;
+			}
+		`);
+	}
+
+	// Active/Click state for Bottom
+	const activeBackgroundBottom = theme.getColor(ACTIVITY_BAR_BOTTOM_ACTIVE_BACKGROUND);
+	if (activeBackgroundBottom) {
+		collector.addRule(`
+			.monaco-workbench .part.auxiliarybar > .header-or-footer.footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:active .active-item-indicator {
+				background-color: ${activeBackgroundBottom} !important;
+				z-index: 0;
+			}
+		`);
+	}
+
+	const activeBorderBottom = theme.getColor(ACTIVITY_BAR_BOTTOM_ACTIVE_BORDER);
+	if (activeBorderBottom) {
+		collector.addRule(`
+			.monaco-workbench .part.auxiliarybar > .header-or-footer.footer > .composite-bar-container > .composite-bar > .monaco-action-bar .action-item:active .active-item-indicator:before {
+				border-bottom-color: ${activeBorderBottom};
 			}
 		`);
 	}
