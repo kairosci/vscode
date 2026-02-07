@@ -16,6 +16,8 @@
  * Internal types (in hooksTypes.ts) are used within VS Code.
  */
 
+import { URI } from '../../../../../base/common/uri.js';
+
 //#region Common Hook Types
 
 /**
@@ -23,9 +25,10 @@
  */
 export interface IHookCommandInput {
 	readonly timestamp: string;
-	readonly cwd: string;
+	readonly cwd: URI;
 	readonly sessionId: string;
 	readonly hookEventName: string;
+	readonly transcript_path?: URI;
 }
 
 /**
@@ -85,6 +88,7 @@ export interface IPreToolUseCommandOutput extends IHookCommandOutput {
 		readonly hookEventName?: string;
 		readonly permissionDecision?: 'allow' | 'deny';
 		readonly permissionDecisionReason?: string;
+		readonly updatedInput?: object;
 		readonly additionalContext?: string;
 	};
 }
