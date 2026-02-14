@@ -50,6 +50,7 @@ export interface IChatAgentAttachmentCapabilities {
 	supportsProblemAttachments?: boolean;
 	supportsSymbolAttachments?: boolean;
 	supportsTerminalAttachments?: boolean;
+	supportsPromptAttachments?: boolean;
 }
 
 export interface IChatAgentData {
@@ -153,7 +154,7 @@ export interface IChatAgentRequest {
 	editedFileEvents?: IChatAgentEditedFileEvent[];
 	/**
 	 * Collected hooks configuration for this request.
-	 * Contains all hooks defined in hooks.json files, organized by hook type.
+	 * Contains all hooks defined in hooks .json files, organized by hook type.
 	 */
 	hooks?: IChatRequestHooks;
 	/**
@@ -184,18 +185,6 @@ export interface IChatQuestion {
 export interface IChatAgentResultTimings {
 	firstProgress?: number;
 	totalElapsed: number;
-}
-
-export interface IChatAgentPromptTokenDetail {
-	category: string;
-	label: string;
-	percentageOfPrompt: number;
-}
-
-export interface IChatAgentResultUsage {
-	promptTokens: number;
-	completionTokens: number;
-	promptTokenDetails?: readonly IChatAgentPromptTokenDetail[];
 }
 
 export interface IChatAgentResult {

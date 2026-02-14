@@ -3518,7 +3518,8 @@ export class ChatRequestTurn implements vscode.ChatRequestTurn2 {
 		readonly participant: string,
 		readonly toolReferences: vscode.ChatLanguageModelToolReference[],
 		readonly editedFileEvents?: vscode.ChatRequestEditedFileEvent[],
-		readonly id?: string
+		readonly id?: string,
+		readonly modelId?: string,
 	) { }
 }
 
@@ -3552,7 +3553,8 @@ export enum ChatLocation {
 export enum ChatSessionStatus {
 	Failed = 0,
 	Completed = 1,
-	InProgress = 2
+	InProgress = 2,
+	NeedsInput = 3
 }
 
 export class ChatSessionChangedFile {
